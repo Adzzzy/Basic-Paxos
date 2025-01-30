@@ -1,0 +1,72 @@
+README file for Basic Paxos implementation
+
+Adam Rebes
+
+This implementation implements Paxos by creating separate threads for each proposer & acceptor and by using sockets to communicate between them.
+Localhost is used as the host for the purposes of this implementation.
+
+The implementation contains three files: Client.java, Election.java, and Member.java.
+
+Election and Member are classes, their respective files containing their fields and methods.
+The Client.java file is used to create members, and an election which uses those members.
+
+---------------------------------------------
+The program is started by running Client.java
+---------------------------------------------
+
+//Client.java
+Created members are given an id (memberNum) upon creation. This number is used to implement the differing profiles of some members.
+These being that only members 1, 2, and 3 are proposers (everyone is an acceptor), who propose themselves, and also have their own unique delays, and probabilities of responding to messages.
+
+MemberNums should be an integer greater than 0, unique, and be consecutive values so that the ports may configure correctly for the server sockets. (Server sockets use port 4567 + memberNum, and they are connected to using a for loop that assumes consecutive values).
+
+Created elections are given an array of the members participating in the election and then the holdElection method is called.
+Once the election finishes and the elected member is returned, the client sleeps for several seconds to let other threads realize consensus has been reached and terminate.
+Following this, the election class calls the closeListeners method to close the serverSockets of the acceptors.
+
+Finally, the winner of the election is printed to the terminal.
+
+//Election.java
+In Election.java, the holdElection method calls the accept method on each member, before then also calling the propose method on members with numbers 1, 2 and 3.
+Following this, it enters a while loop, continually checking the member objects for the identifiers they have accepted, and declaring consensus to be reached when a majority accept the same identifier.
+It's associated value is then found and the member object with that memberNumber is returned.
+
+Concurrently, the propose, and accept methods are running for each member, each having their own thread created for them upon starting. The accept method has a large while loop listening for connections from proposers and then creating a thread to serve each connection.
+Following this the proposer's message is parsed and the expected Paxos response is returned (based on an identifier comparison and on the type of message received).
+The propose function also has a while loop which within it loops phase one of paxos until it receives a majority of promises (evident from the boolean returned by the phaseOne method),
+at which point it runs the phaseTwo method once, returning to the phase one method if unsuccessful.
+
+The phaseOne and phaseTwo methods are both similar. They allow a proposer to send either promises or accept message respectively to all acceptors.
+They create a thread for each acceptor, connecting to their respective server socket so that the message may be sent across.
+They push the responses to an arrayList if it was successful (Promise in phaseOne or Accepted in phaseTwo) and then the parent thread sleeps, acting as a timeout allowing some time (7 seconds) before checking the arrayList to see how many of the threads (messages) received a successful response. 
+After this timeout and check, the boolean is returned and if there are less than a majority of successful responses, the propose method will call the phaseOne method again.
+PhaseOne also checks any promises for a piggybacked value, so the accepted message with the highest identifier received in phase two will be what proposers will propose on subsequent iterations.
+
+The threads of the propose and accept methods will end once the election has declared a consensus, due to their while loops checking the election's consensus variable each iteration.
+Any handler threads created by acceptors or message threads of proposers may continue momentarily until they finish.
+
+//Message Structure
+The messages sent by proposers and acceptors follow the structure of: <TYPE> <IDENTIFIER> <VALUE>
+The elements of the message are separated by spaces, and value isn't included in messages such as PREPARE or NAK.
+The identifier is a timestamp first generated when creating a PREPARE message and is made unique by appending a hash character # along with the member number onto the end.
+PROMISE messages will have their value as null if there were no previously accepted messages. 
+If there is a previously accepted message to piggyback, the PROMISE message will combine the accepted identifier and value into a single string separated by a comma.
+
+//Response delays
+Response delays are implemented by having an acceptor sleep before responding.
+The four categories of response delays are: immediate, small (2 seconds), large (5 seconds) and no response.
+Because the response delays are all smaller than the timeout (7 seconds), the impact on the result isn't as large.
+This decision was made considering relative time of delays (i.e. 6 hours being a small delay to respond to an email, 15 hours being a larger one). 
+Since large delays are relatively common here, I decided a good timeout would be one larger than those delays, to give a majority of members time to respond.
+However, in the case of no response, the timeout will allow the election to continue without waiting too long for those members.
+No response is implemented by having a boolean which acceptors check before responding, and skip the response code if they're not supposed to respond.
+M1 has an immediate response (no sleep).
+M2 has a chance of a larger delay (in the hills) or a smaller chance of no delay (cafe internet connection). M2 also has a chance to not respond at all to a given message.
+M3 usually has a small delay when responding to messages, however since they go camping sometimes, there will be periods of consecutive no response to messages, as well as no proposals by that member. (based on a probability to go or return from camping)
+M4 and above will choose randomly between immediate, small, or large delay each time they respond to a message.
+
+//Testing
+Client.java acts as a driver for testing the paxos implementation. 
+The desired amount of elections can be created and run with varying amounts of members with varying member numbers.
+Members 1-3 are hardcoded to be proposers and to have the unique response delays mentioned above, while any other members added to the election will only be acceptors and will choose their delays randomly.
+Various cases and functionalities were tested using different configurations, with their descriptions and output being available in the TestCases.txt file.
