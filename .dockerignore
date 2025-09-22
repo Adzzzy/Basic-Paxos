@@ -1,0 +1,9 @@
+.dockerignore
+.git
+.github
+.gitignore
+*.class
+Dockerfile
+Overview.txt
+README.md
+TestCases.txt
