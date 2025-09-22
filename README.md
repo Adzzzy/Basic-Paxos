@@ -5,7 +5,7 @@ Due to the unreliable nature of networks and computer hardware, Paxos was create
 Basic Paxos is the simplest of the Paxos algorithms and includes several mechanisms to encourage liveness (progress continues to be made) and safety (in terms of agreeing upon a value) in the presence of faults.
 
 ## Overview
-_To see a detailed overview of the Basic Paxos implementation for this project, refer to the "Overview.txt" file._
+To see a detailed overview of the Basic Paxos implementation for this project, refer to the "Overview.txt" file.
 
 ## Usage
 
@@ -13,10 +13,10 @@ _To see a detailed overview of the Basic Paxos implementation for this project, 
 An Integrated Development Environment for Java such as Eclipse or IntelliJ can be used to easily run the project.
 
 **Download an IDE**
-- Eclipse can be downloaded here: https://www.eclipse.org/downloads/packages/installer
-  - During the installation process, when asked to choose a package choose "Eclipse IDE for Java Developers".
+- The Eclipse IDE can be downloaded here: https://www.eclipse.org/downloads/packages/installer
+  - During the installation process, when asked to choose a package, select "Eclipse IDE for Java Developers".
 - Alternatively, download IntelliJ here: https://www.jetbrains.com/idea/download
-  - **Note:** IntelliJ requires the Java Development Kit (JDK) in order to compile and run code. For information on how to set that up see "Manual Set-up" further below.
+  - Note: IntelliJ requires the Java Development Kit (JDK) in order to compile and run code. For information on how to set that up see "Manual Set-up" further below.
 
 **Create a new project**
 - Open up the IDE and click on the option to create a new project. Choose Java as the project type if it isn't already done so by default.
@@ -57,7 +57,7 @@ If you'd rather set up your environment manually to compile and run Java code, y
   - On Linux the path is usually `/usr/lib/jvm/java-<version>/bin`, add it using the same method as for JAVA_HOME, but call it PATH and add `:$PATH` on the end. E.g. `export PATH=/usr/lib/jvm/java-<version>/bin:$PATH`
   - On Mac the path is typically similar to `/Library/Java/JavaVirtualMachines/jdk-<version>.jdk/Contents/Home/bin` you can open the shell configuration file again, this time adding `export PATH=/Library/Java/JavaVirtualMachines/jdk-<version>/Contents/Home/bin:$PATH` making sure `:$PATH` is included on end.
   - On Windows the path will be something like this: `C:\Program Files\Java\jdk-<version>\bin` To add it to the Path variable, go to Environment Variables again, this time clicking on "Path" in the system variables list. Click "Edit", then "New" and paste the full path inside, including the bin folder.
-  - **Note:** If you already set up JAVA_HOME earlier, you can use that variable in place of the full path name E.g. `$JAVA_HOME/bin` in Linux and Mac, and `%JAVA_HOME/bin` in Windows.
+  - Note: If you already set up JAVA_HOME earlier, you can use that variable in place of the full path name E.g. `$JAVA_HOME/bin` in Linux and Mac, and `%JAVA_HOME/bin` in Windows.
 
 **Compile the Java files**
 - To compile the project, since everything is in the same directory, you can simply compile the client, and everything else will be found and compiled automatically: `javac Client.java`
