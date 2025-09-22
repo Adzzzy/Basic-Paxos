@@ -1,4 +1,4 @@
-README file for Basic Paxos implementation
+Overview for Basic Paxos implementation
 
 Adam Rebes
 
