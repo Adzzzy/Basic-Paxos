@@ -20,7 +20,7 @@ The easiest way to run this project across a wide variety of different environme
 - Open up any terminal or shell. On Windows, Mac, or Linux simply search "Terminal" and open it up. You could also search for "Command Prompt" or "PowerShell" instead on Windows.
 - Paste the following into the terminal and press enter: `docker run ghcr.io/adzzzy/basic-paxos`
     - Note: For a specific version of the image, just add `:<VERSION>` onto the end of the image name. </br> Available versions can be seen here: https://github.com/Adzzzy/Basic-Paxos/pkgs/container/basic-paxos
-- After a few moments for downloading dependencies and the set-up needed to run on your device, the program will start and you're ready to play!
+- After a few moments for downloading dependencies and the set-up needed to run on your device, the program will start and Paxos will begin!
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ If you'd rather set up your environment manually to compile and run Java code, y
   - Note: If you already set up JAVA_HOME earlier, you can use that variable in place of the full path name E.g. `$JAVA_HOME/bin` in Linux and Mac, or `%JAVA_HOME/bin` in Windows.
 
 **Compile the Java files**
-- To compile the project, since everything is in the same directory, you can simply compile the client, and everything else will be found and compiled automatically: `javac Client.java`
+- To compile the project, since everything is in the same directory, you can simply compile the client and everything else will be found and compiled automatically: `javac Client.java`
 
 **Run the compiled Executable**
 - Once compiled, simply run the executable by typing: `java Client`
