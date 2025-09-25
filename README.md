@@ -8,7 +8,6 @@ Basic Paxos is the simplest of the Paxos algorithms and includes several mechani
 To see a detailed overview of the Basic Paxos implementation for this project, refer to the "Overview.txt" file.
 
 ## Usage
-
 ### Running as a Docker container
 The easiest way to run this project across a wide variety of different environments is to run it as a Docker container using the image I've created for it.
 
@@ -24,8 +23,30 @@ The easiest way to run this project across a wide variety of different environme
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
+### Running using the included JAR file
+You can use the included Java Archive (JAR) file to run the compiled project directly across most environments.
+
+**Download the JAR**
+- From the github repository page, click "BasicPaxos.jar" and then press the download arrow icon, or press "View raw". Alternatively, for the whole project press the green "code" button and choose "Download ZIP".
+
+**Get the Java Runtime Environment**
+- To run Java applications you'll need the Java Runtime Environment (JRE). This project's JAR file requires version 25 or above.
+- Head to the Oracle website and choose JDK 25 or above (it contains the JRE): https://www.oracle.com/java/technologies/downloads
+- Make sure you choose the right download for your operating system. It's recommended you download an installer, as it will take care of the set-up for you.
+
+**Run the project**
+- Open up any terminal or shell. On Windows, Mac, or Linux simply search "Terminal" and open it up. You could also search for "Command Prompt" or "PowerShell" instead on Windows.
+- Next, within the terminal you'll need to navigate to the same directory as the JAR file. Do this using the "cd" command. E.g. if the JAR file is in your downloads folder: `cd C:\Users\<UserName>\Downloads`
+- Finally, run the Basic Paxos algorithm with the following command:
+
+     ```console
+     java -jar BasicPaxos.jar
+     ```
+     - If you receive an error message about the "java" command being unrecognized, you can read about the PATH variable in the "Configure Environment Variables" section of "Manual Set-up" further below.
+---------------------------------------------------------------------------------------------------------------------------------------
+
 ### Running using an IDE
-An Integrated Development Environment for Java, such as Eclipse or IntelliJ, can be used to run the project with minimal set-up.
+An Integrated Development Environment for Java, such as Eclipse or IntelliJ, can also be used to run the project with minimal set-up.
 
 **Download an IDE**
 - The Eclipse IDE can be downloaded here: https://www.eclipse.org/downloads/packages/installer
@@ -35,7 +56,7 @@ An Integrated Development Environment for Java, such as Eclipse or IntelliJ, can
 
 **Create a new project**
 - Open up the IDE and click on the option to create a new project. Choose Java as the project type if it isn't already done so by default.
-- Change the project location to the folder where you've stored this repository, or leave it as the default location and drag the files into the project afterwards.
+- Change the project location to the folder where you've stored this repository, or leave it as the default location and drag the java files into the project afterwards.
 
 **Run the project**
 - Click on the Client.java file from the project files on the left-hand side, then press the green run button on the bar near the top of the project window.
@@ -46,7 +67,7 @@ An Integrated Development Environment for Java, such as Eclipse or IntelliJ, can
 If you'd rather set up your environment manually to compile and run Java code, you do so with the following steps:
 
 **Install the Java Development Kit**
-- To download the JDK head to the Oracle webiste and choose the right download for your operating system: https://www.oracle.com/java/technologies/downloads
+- To download the JDK head to the Oracle website and choose the right download for your operating system: https://www.oracle.com/java/technologies/downloads
 - Alternatively you can download it via the command line:
   - On Linux download the package with the package manager of your Linux distribution. E.g. on Ubuntu using apt: `sudo apt update && sudo apt install default-jdk`
   - On Mac first install homebrew with `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`, then install JDK with `brew update && brew install openjdk`
