@@ -1,16 +1,13 @@
-FROM eclipse-temurin:21-jdk-noble
-#Use eclipse temurin for version 21 of the JDK built on Noble Ubuntu base image
-#Eclipse temurin jdk 21 on Alpine final image is around 100MB smaller but has a severe vulnerability so will use Ubuntu for now
+FROM bellsoft/liberica-runtime-container:jre-25-slim-musl
+#Use Bellsoft's liberica runtime container with JRE 25 built on the lightweight Alpaquita Linux
+#Don't need the full JDK, JRE by itself will suffice as we'll use a JAR (Java Archive) containing the compiled files. (Compiled Java files work in any environment using the Java Virtual Machine contained in the JRE)
 
 LABEL Maintainer="Adam Rebes <https://github.com/Adzzzy>"
 
-#copy the contents of the host machine's present working directory into the image's pwd with COPY . .
-COPY . .
-#.dockerignore file has been created to specify files that will be ignored in this copy step to reduce overall image size
-
-#compile Client using javac. Client file depends on other classes so they will be compiled automatically as well. Would have to specify the other files if they weren't in the same directory.
-RUN javac Client.java
+#copy the JAR file from the host machine into the image's present working directory with COPY BasicPaxos.jar . (Image's working directory is root (/) by default)
+COPY BasicPaxos.jar .
+#.dockerignore file not necessary as we've specified a specific file to copy over
 
 #Entrypoint commands given in Exec form i.e. ["executable", "param1", "param2"]
-ENTRYPOINT [ "java", "Client" ]
-#java Client to to run the Client java binary executable
+ENTRYPOINT [ "java", "-jar", "BasicPaxos.jar" ]
+#java command will run the BasicPaxos Java Archive. Will start the program by running Client.class as specified in the JAR's manifest.
